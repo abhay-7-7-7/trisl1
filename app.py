@@ -2,8 +2,25 @@ from flask import Flask, render_template, request, jsonify
 import math
 import random
 import time
+import os
 
 app = Flask(__name__)
+
+# Print current working directory and template folder path for debugging
+print(f"Current working directory: {os.getcwd()}")
+print(f"Template folder path: {os.path.join(os.getcwd(), 'templates')}")
+
+# Check if templates directory exists
+templates_dir = os.path.join(os.getcwd(), 'templates')
+if not os.path.exists(templates_dir):
+    print("Creating templates directory...")
+    os.makedirs(templates_dir)
+
+# Check if static directory exists
+static_dir = os.path.join(os.getcwd(), 'static')
+if not os.path.exists(static_dir):
+    print("Creating static directory...")
+    os.makedirs(static_dir)
 
 # Mock data for hotspots
 def generate_mock_hotspots(lat, lon, count=15):
@@ -56,7 +73,10 @@ def generate_weather_data():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        return f"Error rendering template: {str(e)}", 500
 
 @app.route('/api/hotspots', methods=['POST'])
 def get_hotspots():
@@ -84,4 +104,4 @@ def get_spot_details(token, spot_id):
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
