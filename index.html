@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FisherNav - Fishing Hotspot Navigator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>FisherNav</h1>
+        <p>Find the best fishing spots near you</p>
+    </header>
+
+    <main>
+        <div class="screen" id="search">
+            <div class="card">
+                <h2>Set Your Location</h2>
+                <div class="input-group">
+                    <input type="text" id="placeInput" placeholder="Enter a place name">
+                    <button id="btnGeocode">Search</button>
+                </div>
+                <p>or</p>
+                <button id="btnGPS">Use My Current Location</button>
+            </div>
+
+            <div id="mapSearch" class="map-container"></div>
+        </div>
+
+        <div class="screen hidden" id="results">
+            <div class="card">
+                <h2>Nearby Fishing Hotspots</h2>
+                <p>Found <span id="spotsCount">0</span> spots near your location</p>
+            </div>
+
+            <div class="two-panel">
+                <div class="panel">
+                    <h3>Hotspots List</h3>
+                    <ul id="spotsList"></ul>
+                </div>
+                <div class="panel">
+                    <div id="mapResults" class="map-container"></div>
+                </div>
+            </div>
+
+            <button id="btnBackToSearch">Back to Search</button>
+        </div>
+
+        <div class="screen hidden" id="details">
+            <div class="card">
+                <h2>Spot Details</h2>
+                <div id="detailsMeta"></div>
+            </div>
+
+            <div class="two-panel">
+                <div class="panel card">
+                    <h3>Fishing Probability</h3>
+                    <div class="probability" id="fishProb"></div>
+                    <div id="fishKvs"></div>
+                </div>
+                <div class="panel card">
+                    <h3>Weather Conditions</h3>
+                    <div id="weatherKvs"></div>
+                    <div id="weatherSource"></div>
+                </div>
+            </div>
+
+            <button id="btnSelectSpot">Select This Spot</button>
+            <button id="btnBackToResults">Back to Results</button>
+        </div>
+
+        <div class="screen hidden" id="nav">
+            <div class="card">
+                <h2>Navigation</h2>
+                <p>Ready to navigate to your selected fishing spot</p>
+                <a id="externalNav" target="_blank">Open in Google Maps</a>
+            </div>
+
+            <div id="mapNav" class="map-container"></div>
+
+            <button id="btnBackToDetails">Back to Details</button>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
